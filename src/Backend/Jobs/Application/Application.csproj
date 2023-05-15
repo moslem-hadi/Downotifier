@@ -4,6 +4,21 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>9e4f91ee-a8de-42d2-9d1a-42ee06e48d03</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiCallJobCommandQuery\EventHandlers\" />
+  </ItemGroup>
 
 </Project>
