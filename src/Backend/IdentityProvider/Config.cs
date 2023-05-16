@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace IdentityProvider;
 
@@ -27,7 +28,10 @@ public static class Config
         {
             new ApiScope(Constants.ApiJobsScope),
         };
-
+    public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
+    {
+        new ApiResource("JobsWebApi")
+    };
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
@@ -47,7 +51,8 @@ public static class Config
                 AllowedScopes = { 
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    Constants.ApiJobsScope
+                    Constants.ApiJobsScope,
+                    JwtClaimTypes.Role
                 }
             },
         };

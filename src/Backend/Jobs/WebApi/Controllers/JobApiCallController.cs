@@ -12,6 +12,7 @@ using Application.ApiCallJobCommandQuery.Commands.Delete;
 
 namespace WebApi.Controllers;
 
+[Authorize]
 public class JobApiCallController : BaseApiController
 {
     [HttpGet]

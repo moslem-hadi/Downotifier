@@ -47,7 +47,7 @@ public class SeedData
                         new Claim[]
                         {
                             new Claim(JwtClaimTypes.Role, Config.Constants.UserRole),
-                            new Claim(JwtClaimTypes.Name, "user"),
+                            new Claim(JwtClaimTypes.Name, user.UserName),
                         }).GetAwaiter().GetResult();
 
                 if (!result.Succeeded)

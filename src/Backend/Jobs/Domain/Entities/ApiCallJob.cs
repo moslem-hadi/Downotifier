@@ -18,7 +18,7 @@ public class ApiCallJob : BaseAuditableEntity<int>
 
     public int MonitoringInterval { get; set; }
 
-    public List<Notification> Notifications{ get; set; }
+   // public List<Notification> Notifications{ get; set; }
 
 }
 public class Notification

@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebApiServices();
+builder.Services.AddWebApiServices(builder.Configuration);
 
 builder.Services.AddCors();
 
@@ -37,8 +37,8 @@ app.UseCors(builder => builder
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
