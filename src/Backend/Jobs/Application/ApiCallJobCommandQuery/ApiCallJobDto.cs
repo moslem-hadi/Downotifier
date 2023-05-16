@@ -1,5 +1,6 @@
 ﻿using Application.Common.Mappings;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.ApiCallJobCommandQuery;
 
