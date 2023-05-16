@@ -9,23 +9,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{8B73
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityProvider", "IdentityProvider", "{87D333C9-CF00-4F07-9AA5-4CF406426F60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityProvider", "src\Backend\IdentityProvider\IdentityProvider.csproj", "{D6CD47A4-7829-46F5-B94D-E9A753F5851D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "src\Backend\IdentityProvider\IdentityProvider.csproj", "{D6CD47A4-7829-46F5-B94D-E9A753F5851D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{23993EDE-6604-4BC4-B244-C263BFE8DBED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheduler", "Scheduler", "{AAD680D2-92DA-440D-B01D-494DD4B2AEEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Backend\Jobs\Domain\Domain.csproj", "{D065B565-2604-4058-A129-0519B58CF54F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Backend\Jobs\Domain\Domain.csproj", "{D065B565-2604-4058-A129-0519B58CF54F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Backend\Jobs\Application\Application.csproj", "{CE8CCE19-2056-465E-9140-B2EE2ACDC044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Backend\Jobs\Application\Application.csproj", "{CE8CCE19-2056-465E-9140-B2EE2ACDC044}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Backend\Jobs\Infrastructure\Infrastructure.csproj", "{F8051FAD-8C65-41FC-8A03-B4FE22003FB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Backend\Jobs\Infrastructure\Infrastructure.csproj", "{F8051FAD-8C65-41FC-8A03-B4FE22003FB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\Backend\Jobs\WebApi\WebApi.csproj", "{344E9DC6-017B-4DBC-946C-FE84EBC3309E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\Backend\Jobs\WebApi\WebApi.csproj", "{344E9DC6-017B-4DBC-946C-FE84EBC3309E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notifier", "Notifier", "{3A6E2BE0-AE73-4F8F-9760-7C396A955249}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{47A03634-93BC-4118-84FB-FAC43F7A1C27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler", "src\Backend\Scheduler\Scheduler.csproj", "{DDE1D29A-D419-487B-8095-6B20FE2AA271}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{344E9DC6-017B-4DBC-946C-FE84EBC3309E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{344E9DC6-017B-4DBC-946C-FE84EBC3309E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{344E9DC6-017B-4DBC-946C-FE84EBC3309E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE1D29A-D419-487B-8095-6B20FE2AA271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE1D29A-D419-487B-8095-6B20FE2AA271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE1D29A-D419-487B-8095-6B20FE2AA271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE1D29A-D419-487B-8095-6B20FE2AA271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{344E9DC6-017B-4DBC-946C-FE84EBC3309E} = {23993EDE-6604-4BC4-B244-C263BFE8DBED}
 		{3A6E2BE0-AE73-4F8F-9760-7C396A955249} = {8B73C6EF-CE7F-4BFA-AD22-6B4996EE95C2}
 		{47A03634-93BC-4118-84FB-FAC43F7A1C27} = {8B73C6EF-CE7F-4BFA-AD22-6B4996EE95C2}
+		{DDE1D29A-D419-487B-8095-6B20FE2AA271} = {AAD680D2-92DA-440D-B01D-494DD4B2AEEC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA70064B-11E6-437B-AB41-0A3069ADFE92}
