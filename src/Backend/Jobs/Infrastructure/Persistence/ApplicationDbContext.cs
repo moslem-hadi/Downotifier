@@ -5,7 +5,6 @@ using Infrastructure.Persistence.Interceptors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Infrastructure.Identity;
 
 namespace Infrastructure.Persistence;
 

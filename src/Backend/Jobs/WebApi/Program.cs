@@ -38,13 +38,12 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapRazorPages();
 
 app.Run();
 public partial class Program { }

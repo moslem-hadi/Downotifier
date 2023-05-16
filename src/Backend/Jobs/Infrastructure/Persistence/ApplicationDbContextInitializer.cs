@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
-using Infrastructure.Identity;
 
 namespace Infrastructure.Persistence;
 
@@ -46,18 +45,18 @@ public class ApplicationDbContextInitializer
 
     public async Task TrySeedAsync()
     {
-        // Default data
-        if (!_context.ApiCallJobs.Any())
-        {
-            _context.AddRange(new List<ApiCallJob>()
-            {
-                new ApiCallJob
-                {
-                    Title = "",
-                }, 
-            });
+        //// Default data
+        //if (!_context.ApiCallJobs.Any())
+        //{
+        //    _context.AddRange(new List<ApiCallJob>()
+        //    {
+        //        new ApiCallJob
+        //        {
+        //            Title = "",
+        //        }, 
+        //    });
 
-            await _context.SaveChangesAsync();
-        }
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

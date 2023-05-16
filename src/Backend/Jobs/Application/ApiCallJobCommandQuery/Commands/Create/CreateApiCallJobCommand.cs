@@ -13,7 +13,11 @@ public record CreateApiCallJobCommand : ApiCallJobDto, IRequest<int>
     public static implicit operator ApiCallJob(CreateApiCallJobCommand apiCallJob) => new()
     {
         Title = apiCallJob.Title,
-        
+        Headers = apiCallJob.Headers,
+        JsonBody = apiCallJob.JsonBody,
+        Method = apiCallJob.Method,
+        MonitoringInterval = apiCallJob.MonitoringInterval,
+        Url = apiCallJob.Url,
     };
 }
 

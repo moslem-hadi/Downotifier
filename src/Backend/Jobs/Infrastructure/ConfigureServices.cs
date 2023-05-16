@@ -4,7 +4,6 @@ using Infrastructure.Persistence.Interceptors;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.Identity;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +25,7 @@ public static class ConfigureServices
         services.AddScoped<ApplicationDbContextInitializer>();
 
         services.AddTransient<IDateTime, DateTimeService>();
-        services.AddTransient<IIdentityService, IdentityService>();
+        //services.AddTransient<IIdentityService, IdentityService>();
 
         return services;
     }
