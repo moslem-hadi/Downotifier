@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 using System;
+using static Shared.Constants;
 
 namespace Shared.Messaging.RabbitMQ;
 
@@ -26,9 +27,9 @@ public sealed class RabbitMqSubscriber : IMessageSubscriber
         // create channel  
         _channel = _connection.CreateModel();
 
-        _channel.ExchangeDeclare("job.exchange", ExchangeType.Topic);
-        _channel.QueueDeclare("job", false, false, false, null);
-        _channel.QueueBind("job", "job.exchange", "job.queue.*", null);
+        _channel.ExchangeDeclare($"{QueueConstants.Job}.exchange", ExchangeType.Topic);
+        _channel.QueueDeclare(QueueConstants.Job, false, false, false, null);
+        _channel.QueueBind(QueueConstants.Job, $"{QueueConstants.Job}.exchange", $"{QueueConstants.Job}.queue.*", null);
         _channel.BasicQos(0, 1, false);
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += (ch, ea) =>
@@ -44,7 +45,7 @@ public sealed class RabbitMqSubscriber : IMessageSubscriber
             _channel.BasicAck(ea.DeliveryTag, false);
         };
 
-        _channel.BasicConsume("job", false, consumer);
+        _channel.BasicConsume(QueueConstants.Job, false, consumer);
         return Task.CompletedTask;
     }
 }

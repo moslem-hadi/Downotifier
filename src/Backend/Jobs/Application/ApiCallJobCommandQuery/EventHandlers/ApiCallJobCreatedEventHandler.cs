@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Shared.Messaging;
+using static Shared.Constants;
 
 namespace Application.ApiCallJobCommandQuery.EventHandlers;
 
@@ -18,7 +19,7 @@ internal class ApiCallJobCreatedEventHandler : INotificationHandler<ApiCallJobCr
 
     public Task Handle(ApiCallJobCreatedEvent notification, CancellationToken cancellationToken)
     {
-        _messagePublisher.PublishAsync("job", new JobCreated
+        _messagePublisher.PublishAsync(QueueConstants.Job, new JobCreated
         {
             Url = notification.apiCallJob.Url,
             Id = notification.apiCallJob.Id,

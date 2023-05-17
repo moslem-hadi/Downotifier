@@ -1,12 +1,11 @@
 ﻿using Shared.Enums;
+using Shared.Messaging;
 
-namespace Domain.Entities;
+namespace Scheduler.Models.Events;
 
-public class ApiCallJob : BaseAuditableEntity<int>
+public record ApiCallJobCreated : IMessage
 {
-    public Guid UserId { get; set; }
-
-    public string Title { get; set; }
+    public int Id { get; set; }
 
     public string Url { get; set; }
 
@@ -18,12 +17,11 @@ public class ApiCallJob : BaseAuditableEntity<int>
 
     public int MonitoringInterval { get; set; }
 
-    public ICollection<Notification> Notifications{ get; set; }
-
+    public List<Notification> Notifications { get; set; }
 }
-public class Notification : BaseEntity<int>
+
+public class Notification : IMessage
 {
-    //save the notifications.
     public NotificationType Type { get; set; }
     public string Receiver { get; set; }
     public string Message { get; set; }

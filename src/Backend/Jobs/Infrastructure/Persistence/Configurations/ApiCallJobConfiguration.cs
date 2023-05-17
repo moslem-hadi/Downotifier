@@ -23,8 +23,8 @@ public class ApiCallJobConfiguration : IEntityTypeConfiguration<ApiCallJob>
             .IsRequired();
 
         builder.Property(t => t.Method)
-            .IsRequired();
-
+            .IsRequired(); 
+        builder.HasMany(a => a.Notifications).WithOne();
         builder
             .Property(b => b.Headers)
             .HasConversion(
