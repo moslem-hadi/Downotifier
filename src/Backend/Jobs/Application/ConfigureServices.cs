@@ -5,6 +5,7 @@ using MediatR;
 using MediatR.NotificationPublishers;
 using Shared.Messaging;
 using Shared.Messaging.Pulsar;
+using Shared.Serialization;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -23,9 +24,10 @@ public static class ConfigureServices
 
         });
 
-        services.AddMessaging()
-            //.AddRabbitMQMessaging()
-            .AddPulsar();
+        services.AddSerialization()
+            .AddMessaging()
+            .AddRabbitMQMessaging()
+            ;//.AddPulsar();
 
         return services;
     }

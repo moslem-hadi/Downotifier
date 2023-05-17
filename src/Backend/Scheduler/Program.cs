@@ -1,7 +1,9 @@
 using Hangfire;
+using ProtoBuf.Meta;
 using Scheduler.Services;
 using Shared.Messaging;
 using Shared.Messaging.Pulsar;
+using Shared.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +14,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddHostedService<ConsumeRabbitMQHostedService>();
 builder.Services.AddMessaging()
-    //.AddRabbitMQMessaging()
-    .AddPulsar()
+    .AddSerialization()
+    .AddRabbitMQMessaging()
+    //.AddPulsar()
     .AddHostedService<MessagingBackgroundService>();
 
 //var queue = "job";
