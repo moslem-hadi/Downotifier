@@ -1,13 +1,8 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Application.Common.Security;
-using AutoMapper;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Update;
 
-[Authorize]
 public class UpdateApiCallJobCommand : ApiCallJobDto, IRequest 
 {
 }

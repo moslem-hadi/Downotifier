@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using Application.Common.Security;
 
 namespace Application.ApiCallJobCommandQuery.Queries.GetApiCallJob;

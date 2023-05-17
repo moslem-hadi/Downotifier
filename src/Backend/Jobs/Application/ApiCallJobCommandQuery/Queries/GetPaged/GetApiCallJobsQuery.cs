@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using Application.Common.Interfaces;
-using MediatR;
 using Application.Common.Mappings;
 using Application.Common.Models;
 using Application.Common.Security;

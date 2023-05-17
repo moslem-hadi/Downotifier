@@ -1,7 +1,5 @@
 ﻿using Application.Common.Interfaces;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Create;
 

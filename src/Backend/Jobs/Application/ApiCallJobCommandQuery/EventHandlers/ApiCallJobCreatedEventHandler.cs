@@ -1,6 +1,4 @@
-﻿using Domain.Events;
-using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Shared.Messaging;
 using static Shared.Constants;
 

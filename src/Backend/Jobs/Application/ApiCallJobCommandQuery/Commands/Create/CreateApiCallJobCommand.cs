@@ -1,15 +1,7 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Application.Common.Security;
-using AutoMapper;
-using Domain.Events;
-using Application.Common.Mappings;
-using AutoMapper.Internal;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Create;
 
-[Authorize]
 public partial class CreateApiCallJobCommand : ApiCallJobDto, IRequest<int> 
 { 
 }

@@ -39,7 +39,7 @@ function createReducers() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_API_URL}auth`;
+  const baseUrl = `${process.env.REACT_APP_AUTH_URL}`;
 
   return {
     login: login(),
@@ -48,8 +48,27 @@ function createExtraActions() {
   function login() {
     return createAsyncThunk(
       `${name}/login`,
-      async ({ username, password }) =>
-        await fetchWrapper.post(`${baseUrl}/login`, { username, password })
+      async ({ username, password }) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("client_id", "JobsWebApi");
+        urlencoded.append("grant_type", "password");
+        urlencoded.append("username", username);
+        urlencoded.append("password", password);
+        urlencoded.append("client_secret", "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0");
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: urlencoded,
+          redirect: 'follow'
+        };
+
+        return await fetch(baseUrl, requestOptions).then(response => response.text())
+
+      }
     );
   }
 }
@@ -66,7 +85,7 @@ function createExtraReducers() {
         state.error = null;
       },
       [fulfilled]: (state, action) => {
-        const user = action.payload;
+        const user = JSON.parse(action.payload).access_token;
         localStorage.setItem('user', JSON.stringify(user));
         state.user = user;
         const { from } = history.location.state || { from: { pathname: '/' } };

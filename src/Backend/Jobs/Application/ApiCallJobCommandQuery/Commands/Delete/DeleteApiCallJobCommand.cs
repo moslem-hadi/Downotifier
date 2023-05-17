@@ -1,14 +1,8 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
-using Domain.Entities;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Application.Common.Security;
-using Domain.Events;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Delete;
 
-[Authorize]
 public record DeleteApiCallJobCommand(int Id) : IRequest;
 
 public class DeleteShipCommandHandler : IRequestHandler<DeleteApiCallJobCommand>

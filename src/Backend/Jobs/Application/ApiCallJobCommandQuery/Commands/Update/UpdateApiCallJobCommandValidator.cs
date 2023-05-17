@@ -1,7 +1,4 @@
-﻿using Application.Common.Interfaces;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
+﻿using FluentValidation;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Update;
 

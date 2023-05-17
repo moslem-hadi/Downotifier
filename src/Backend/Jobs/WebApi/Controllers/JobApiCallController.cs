@@ -12,7 +12,7 @@ using Application.ApiCallJobCommandQuery.Commands.Delete;
 
 namespace WebApi.Controllers;
 
-//[Authorize]
+[Authorize]
 //TODO: ooops, should be JobApiCalls
 public class JobApiCallController : BaseApiController
 {
