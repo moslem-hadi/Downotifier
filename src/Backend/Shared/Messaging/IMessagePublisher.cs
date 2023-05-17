@@ -2,5 +2,5 @@
 
 public interface IMessagePublisher
 {
-    Task PublishAsync<T>(string queue, T message) where T : class, IMessage;
+    Task PublishAsync<T>(string queue, T message) where T : class;
 }

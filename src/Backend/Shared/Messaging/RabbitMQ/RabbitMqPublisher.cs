@@ -6,7 +6,7 @@ namespace Shared.Messaging.RabbitMQ;
 
 public sealed class RabbitMqPublisher : IMessagePublisher
 {
-    public async Task PublishAsync<T>(string queue, T message) where T : class, IMessage
+    public async Task PublishAsync<T>(string queue, T message) where T : class//, IMessage
     {
         var factory = new ConnectionFactory
         {

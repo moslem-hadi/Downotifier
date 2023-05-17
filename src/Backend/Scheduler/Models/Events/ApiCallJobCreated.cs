@@ -3,7 +3,7 @@ using Shared.Messaging;
 
 namespace Scheduler.Models.Events;
 
-public record ApiCallJobCreated : IMessage
+public record ApiCallJobCreated// : IMessage
 {
     public int Id { get; set; }
 
@@ -20,7 +20,7 @@ public record ApiCallJobCreated : IMessage
     public List<Notification> Notifications { get; set; }
 }
 
-public class Notification : IMessage
+public class Notification// : IMessage
 {
     public NotificationType Type { get; set; }
     public string Receiver { get; set; }

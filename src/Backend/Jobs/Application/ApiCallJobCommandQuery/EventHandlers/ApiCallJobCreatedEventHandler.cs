@@ -19,21 +19,9 @@ internal class ApiCallJobCreatedEventHandler : INotificationHandler<ApiCallJobCr
 
     public Task Handle(ApiCallJobCreatedEvent notification, CancellationToken cancellationToken)
     {
-        _messagePublisher.PublishAsync(QueueConstants.Job, new JobCreated
-        {
-            Url = notification.apiCallJob.Url,
-            Id = notification.apiCallJob.Id,
-            MonitoringInterval = notification.apiCallJob.MonitoringInterval,
-        });
+        _messagePublisher.PublishAsync(QueueConstants.Job, notification.apiCallJob);
 
         return Task.CompletedTask;
     }
 
-    public class JobCreated : IMessage
-    {
-        public int Id { get; set; }
-        public string Url { get; set; }
-        public int MonitoringInterval { get; set; }
-
-    }
 }

@@ -11,7 +11,7 @@ using System;
 namespace Application.ApiCallJobCommandQuery.Commands.Update;
 
 [Authorize]
-public record UpdateApiCallJobCommand : ApiCallJobDto, IRequest
+public class UpdateApiCallJobCommand : ApiCallJobDto, IRequest
 {
     //public static implicit operator ApiCallJob(UpdateApiCallJobCommand apiCallJob) => new()
     //{

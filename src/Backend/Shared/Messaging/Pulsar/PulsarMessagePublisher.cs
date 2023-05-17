@@ -23,7 +23,7 @@ internal sealed class PulsarMessagePublisher : IMessagePublisher
         _producerName = Assembly.GetEntryAssembly()?.FullName?.Split(",")[0].ToLowerInvariant() ?? string.Empty;
     }
     
-    public async Task PublishAsync<T>(string queue, T message) where T : class, IMessage
+    public async Task PublishAsync<T>(string queue, T message) where T : class//, IMessage
     {
         var producer = _producers.GetOrAdd(queue, _client.NewProducer()
             .ProducerName(_producerName)

@@ -19,7 +19,7 @@ internal sealed class PulsarMessageSubscriber : IMessageSubscriber
         _consumerName = Assembly.GetEntryAssembly()?.FullName?.Split(",")[0].ToLowerInvariant() ?? string.Empty;
     }
     
-    public async Task SubscribeAsync<T>(string queue, Action<MessageEnvelope<T>> handler) where T : class, IMessage
+    public async Task SubscribeAsync<T>(string queue, Action<MessageEnvelope<T>> handler) where T : class//, IMessage
     {
         var subscription = $"{_consumerName}_{queue}";
         var consumer = _client.NewConsumer()
