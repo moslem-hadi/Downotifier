@@ -18,7 +18,7 @@ namespace Notifier.Services
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             stoppingToken.ThrowIfCancellationRequested();
-            _messageSubscriber.SubscribeAsync<NotificationEvent>(QueueConstants.Job, HandleNotify);
+            _messageSubscriber.SubscribeAsync<NotificationEvent>(QueueConstants.Notify, HandleNotify);
             return Task.CompletedTask;
 
         }
