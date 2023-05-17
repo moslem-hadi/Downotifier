@@ -3,6 +3,8 @@ using Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
 using MediatR.NotificationPublishers;
+using Shared.Messaging;
+using Shared.Messaging.Pulsar;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +22,10 @@ public static class ConfigureServices
             cfg.NotificationPublisher = new TaskWhenAllPublisher();//Publish Notifications In Parallel
 
         });
+
+        services.AddMessaging()
+            //.AddRabbitMQMessaging()
+            .AddPulsar();
 
         return services;
     }

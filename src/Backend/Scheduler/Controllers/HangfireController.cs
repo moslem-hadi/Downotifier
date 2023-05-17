@@ -17,7 +17,7 @@ namespace Scheduler.Controllers
         [HttpPost]
         public async Task CreateJob()
         {
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Sent similar product offer and suuggestions"), Cron.MinuteInterval(1);
+            RecurringJob.AddOrUpdate(() => Console.WriteLine("Sent similar product offer and suuggestions"), Cron.MinuteInterval(1));
         }
     }
 }

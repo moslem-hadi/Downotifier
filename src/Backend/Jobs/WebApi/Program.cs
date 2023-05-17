@@ -1,4 +1,5 @@
 using Infrastructure.Persistence;
+using Shared.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,10 +36,10 @@ app.UseCors(builder => builder
 
 //app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCorrelationId();
 
 app.MapControllerRoute(
     name: "default",

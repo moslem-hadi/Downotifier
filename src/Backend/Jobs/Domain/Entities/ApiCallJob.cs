@@ -4,7 +4,7 @@ namespace Domain.Entities;
 
 public class ApiCallJob : BaseAuditableEntity<int>
 {
-    public Guid UserId { get; set; }
+   // public Guid UserId { get; set; }
 
     public string Title { get; set; }
 

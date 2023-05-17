@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Domain.Common;
+﻿namespace Domain.Common;
 
 public abstract record BaseEvent : INotification
 {
