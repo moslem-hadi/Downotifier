@@ -1,4 +1,5 @@
 ﻿using Notifier.Models.Events;
+using Notifier.Services.Notify;
 using Shared.Helper;
 using Shared.Messaging;
 using static Shared.Constants;
@@ -18,14 +19,16 @@ namespace Notifier.Services
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             stoppingToken.ThrowIfCancellationRequested();
-            _messageSubscriber.SubscribeAsync<NotificationEvent>(QueueConstants.Job, HandleNotify);
+            _messageSubscriber.SubscribeAsync<NotificationEvent>(QueueConstants.Notify, HandleNotify);
             return Task.CompletedTask;
 
         }
         public void HandleNotify(MessageEnvelope<NotificationEvent> message)
         {
             var notify = message.Message;
+            var notifier = new NotifierContext(new SmsNotifyService());
 
+            notifier.Notify(notify);
         }
     }
 }

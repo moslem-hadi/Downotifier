@@ -1,5 +1,8 @@
+using Notifier.Services;
 using Notifier.Services.Notify;
 using Shared.Extensions;
+using Shared.Messaging;
+using Shared.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,11 @@ builder.Services.AddMailerSend(options =>
     options.SenderName = builder.Configuration["MailSender:SenderName"];
 });
 builder.Services.AddScoped<INotifyService, EmailNotifyService>();
+builder.Services.AddMessaging()
+    .AddSerialization()
+    .AddRabbitMQMessaging()
+    .AddHostedService<MessagingBackgroundService>();
+
 
 var app = builder.Build();
 
