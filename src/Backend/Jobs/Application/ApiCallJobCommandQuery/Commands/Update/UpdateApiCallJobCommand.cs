@@ -4,25 +4,12 @@ using Domain.Entities;
 using MediatR;
 using Application.Common.Security;
 using AutoMapper;
-using System.Reflection.PortableExecutable;
-using System.Text.Json.Nodes;
-using System;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Update;
 
 [Authorize]
-public class UpdateApiCallJobCommand : ApiCallJobDto, IRequest
+public class UpdateApiCallJobCommand : ApiCallJobDto, IRequest 
 {
-    //public static implicit operator ApiCallJob(UpdateApiCallJobCommand apiCallJob) => new()
-    //{
-    //    Title = apiCallJob.Title,
-    //    Headers = apiCallJob.Headers,
-    //    JsonBody = apiCallJob.JsonBody,
-    //    Method = apiCallJob.Method,
-    //    MonitoringInterval = apiCallJob.MonitoringInterval,
-    //    Url = apiCallJob.Url,
-    //    Id = (int)apiCallJob.Id,
-    //};
 }
 
 public class UpdateApiCallJobCommandHandler : IRequestHandler<UpdateApiCallJobCommand>
@@ -50,6 +37,8 @@ public class UpdateApiCallJobCommandHandler : IRequestHandler<UpdateApiCallJobCo
         entity.Method = request.Method;
         entity.MonitoringInterval = request.MonitoringInterval;
         entity.Url = request.Url;
+        entity.Notifications = request.Notifications;
+        entity.UserId = request.UserId;
         // _context.Entry(entity).CurrentValues.SetValues((ApiCallJob)(request));
         await _context.SaveChangesAsync(cancellationToken);
 

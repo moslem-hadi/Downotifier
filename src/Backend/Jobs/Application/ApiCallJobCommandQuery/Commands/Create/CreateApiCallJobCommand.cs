@@ -4,38 +4,30 @@ using MediatR;
 using Application.Common.Security;
 using AutoMapper;
 using Domain.Events;
+using Application.Common.Mappings;
+using AutoMapper.Internal;
 
 namespace Application.ApiCallJobCommandQuery.Commands.Create;
 
 [Authorize]
-public class CreateApiCallJobCommand : ApiCallJobDto, IRequest<int>
-{
-    //public static implicit operator ApiCallJob(CreateApiCallJobCommand apiCallJob) => new()
-    //{
-    //    Title = apiCallJob.Title,
-    //    Headers = apiCallJob.Headers,
-    //    JsonBody = apiCallJob.JsonBody,
-    //    Method = apiCallJob.Method,
-    //    MonitoringInterval = apiCallJob.MonitoringInterval,
-    //    Url = apiCallJob.Url,
-    //    UserId = apiCallJob.UserId,
-    //    Notifications = apiCallJob.Notifications
-    //};
+public partial class CreateApiCallJobCommand : ApiCallJobDto, IRequest<int> 
+{ 
 }
 
 public class CreateApiCallJobCommandHandler : IRequestHandler<CreateApiCallJobCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public CreateApiCallJobCommandHandler(IApplicationDbContext context)
+    public CreateApiCallJobCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<int> Handle(CreateApiCallJobCommand request, CancellationToken cancellationToken)
-    {
-        var entity = (ApiCallJob)request;
-        //var entity = _mapper.Map<ApiCallJob>(request)
+    { 
+        var entity = _mapper.Map<ApiCallJob>(request); 
 
         entity.AddDomainEvent(new ApiCallJobCreatedEvent(entity));
         _context.ApiCallJobs.Add(entity);

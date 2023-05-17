@@ -1,5 +1,8 @@
 using System.Reflection;
+using Application.ApiCallJobCommandQuery.Commands.Create;
+using Application.ApiCallJobCommandQuery.Commands.Update;
 using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Common.Mappings;
 
@@ -8,6 +11,8 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+        CreateMap<CreateApiCallJobCommand, ApiCallJob>().ReverseMap();
+        CreateMap<UpdateApiCallJobCommand, ApiCallJob>().ReverseMap();
     }
 
     private void ApplyMappingsFromAssembly(Assembly assembly)

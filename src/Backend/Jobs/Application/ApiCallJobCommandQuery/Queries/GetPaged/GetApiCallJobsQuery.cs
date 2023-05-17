@@ -28,7 +28,7 @@ public class GetShipsQueryHandler : IRequestHandler<GetApiCallJobsQuery, Paginat
 
     public async Task<PaginatedList<ApiCallJobDto>> Handle(GetApiCallJobsQuery request, CancellationToken cancellationToken)
     {
-        return await _context.ApiCallJobs
+        return await _context.ApiCallJobs.OrderByDescending(a=> a.Id)
             .ProjectTo<ApiCallJobDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.Page, request.PageSize);
     }

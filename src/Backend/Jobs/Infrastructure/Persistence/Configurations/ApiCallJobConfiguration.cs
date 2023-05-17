@@ -24,7 +24,9 @@ public class ApiCallJobConfiguration : IEntityTypeConfiguration<ApiCallJob>
 
         builder.Property(t => t.Method)
             .IsRequired(); 
-        builder.HasMany(a => a.Notifications).WithOne();
+        builder.HasMany(a => a.Notifications).WithOne()
+            .OnDelete(DeleteBehavior.Cascade); 
+
         builder
             .Property(b => b.Headers)
             .HasConversion(
