@@ -49,7 +49,7 @@ builder.Services.AddMessaging()
 //channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
 
 
-builder.Services.AddHangfire(x => x.UseSqlServerStorage(@"Data Source=.;Initial Catalog=hangfire;Integrated Security=True;Pooling=False"));
+builder.Services.AddHangfire(x => x.UseSqlServerStorage(@"Data Source=.;Initial Catalog=hangfire;Integrated Security=True;Pooling=False;TrustServerCertificate=True"));
 builder.Services.AddHangfireServer();
 
 var app = builder.Build();

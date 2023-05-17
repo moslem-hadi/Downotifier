@@ -1,4 +1,5 @@
-﻿using Scheduler.Models.Events;
+﻿using Hangfire;
+using Scheduler.Models.Events;
 using Shared.Messaging;
 
 namespace Scheduler.Services
@@ -16,13 +17,40 @@ namespace Scheduler.Services
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             stoppingToken.ThrowIfCancellationRequested();
-            _messageSubscriber.SubscribeAsync<ApiCallJobCreatedEvent>("job", Fu);
+            _messageSubscriber.SubscribeAsync<ApiCallJobCreatedEvent>("job", HandleApiCallJobCreated);
             return Task.CompletedTask;
 
         }
-        public void Fu(MessageEnvelope<ApiCallJobCreatedEvent> message)
+        public void HandleApiCallJobCreated(MessageEnvelope<ApiCallJobCreatedEvent> message)
         {
-            _logger.LogInformation(message.Message.Url);
+            var apiCallJobMessage = message.Message;
+            var apiCallJob = new HttpCall();
+       
+            _logger.LogInformation("Job being added: "+ apiCallJobMessage.Url);
+            RecurringJob.RemoveIfExists(apiCallJobMessage.Id.ToString());
+            RecurringJob.AddOrUpdate<HttpCall>(
+                apiCallJobMessage.Id.ToString(),
+                job => apiCallJob.Run(apiCallJobMessage,JobCancellationToken.Null),
+                Cron.MinuteInterval(apiCallJobMessage.MonitoringInterval!));
+
+        }
+
+
+        public class HttpCall  
+        {
+            public  Task Run(ApiCallJobCreatedEvent msg,IJobCancellationToken cancellationToken)
+            {
+                Console.WriteLine ("Job is running " + msg.Url);
+                if (Random.Shared.Next(0,5) % 2 == 0)
+                {
+
+                }
+                else{ 
+                
+                }
+
+                return Task.CompletedTask;
+            }
         }
     }
 }

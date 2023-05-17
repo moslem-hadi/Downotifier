@@ -18,11 +18,11 @@ internal class ApiCallJobCreatedEventHandler : INotificationHandler<ApiCallJobCr
 
     public Task Handle(ApiCallJobCreatedEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
         _messagePublisher.PublishAsync("job", new JobCreated
         {
             Url = notification.apiCallJob.Url,
             Id = notification.apiCallJob.Id,
+            MonitoringInterval = notification.apiCallJob.MonitoringInterval,
         });
 
         return Task.CompletedTask;
@@ -32,6 +32,7 @@ internal class ApiCallJobCreatedEventHandler : INotificationHandler<ApiCallJobCr
     {
         public int Id { get; set; }
         public string Url { get; set; }
+        public int MonitoringInterval { get; set; }
 
     }
 }
