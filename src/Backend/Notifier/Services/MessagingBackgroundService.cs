@@ -2,6 +2,7 @@
 using Notifier.Services.Notify;
 using Shared.Helper;
 using Shared.Messaging;
+using Shared.Services.Email;
 using static Shared.Constants;
 
 namespace Notifier.Services
@@ -10,10 +11,12 @@ namespace Notifier.Services
     {
         readonly IMessageSubscriber _messageSubscriber;
         readonly ILogger<MessagingBackgroundService> _logger;
-        public MessagingBackgroundService(IMessageSubscriber messageSubscriber, ILogger<MessagingBackgroundService> logger)
+        private readonly IEmailSender _emailSender;
+        public MessagingBackgroundService(IMessageSubscriber messageSubscriber, ILogger<MessagingBackgroundService> logger, IEmailSender emailSender)
         {
             _messageSubscriber = messageSubscriber;
             _logger = logger;
+            _emailSender = emailSender;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -26,9 +29,16 @@ namespace Notifier.Services
         public void HandleNotify(MessageEnvelope<NotificationEvent> message)
         {
             var notify = message.Message;
-            var notifier = new NotifierContext(new SmsNotifyService());
-
-            notifier.Notify(notify);
+            INotifyService strategy = default!;
+            switch (notify.Type)
+            {
+                case NotificationType.Email:
+                    strategy = new EmailNotifyService(_emailSender);
+                    break;
+                default:
+                    break;
+            }
+            strategy.Notify(notify);
         }
     }
 }

@@ -7,7 +7,7 @@ public class NotifierContext
 {
     private INotifyService _notifyService;
 
-    public NotifierContext(INotifyService notifyService)
+    public void SetNotifyService(INotifyService notifyService)
     {
         _notifyService = notifyService;
     }

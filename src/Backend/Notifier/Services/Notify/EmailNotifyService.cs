@@ -3,7 +3,7 @@ using Shared.Services.Email;
 
 namespace Notifier.Services.Notify
 {
-    public class EmailNotifyService : INotifyService
+    public class EmailNotifyService : IEmailNotifyService
     {
         private readonly IEmailSender _emailSender;
 
@@ -16,5 +16,9 @@ namespace Notifier.Services.Notify
         {
            await  _emailSender.SendMailAsync(new Recipient(notification.Receiver), "Notifier", notification.Message, cancellationToken);
         }
+    }
+
+    public interface IEmailNotifyService : INotifyService
+    {
     }
 }

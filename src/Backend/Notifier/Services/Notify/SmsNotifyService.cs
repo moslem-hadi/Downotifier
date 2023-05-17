@@ -2,7 +2,7 @@
 
 namespace Notifier.Services.Notify
 {
-    public class SmsNotifyService : INotifyService
+    public class SmsNotifyService : INotifyService, ISmsNotifyService
     {
         public Task Notify(NotificationEvent notification, CancellationToken cancellationToken = default)
         {
@@ -10,5 +10,9 @@ namespace Notifier.Services.Notify
 
             return Task.CompletedTask;
         }
+    }
+
+    public interface ISmsNotifyService
+    {
     }
 }

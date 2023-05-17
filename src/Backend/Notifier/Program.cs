@@ -22,7 +22,8 @@ builder.Services.AddMessaging()
     .AddSerialization()
     .AddRabbitMQMessaging()
     .AddHostedService<MessagingBackgroundService>();
-
+builder.Services.AddScoped<IEmailNotifyService, EmailNotifyService>();
+builder.Services.AddScoped<ISmsNotifyService, SmsNotifyService>();
 
 var app = builder.Build();
 
