@@ -1,24 +1,21 @@
-﻿using Notifier.Models.Events;
+﻿using Microsoft.AspNetCore.Mvc;
+using Notifier.Models.Events;
+using ProtoBuf.Meta;
 using Shared.Services.Email;
 
 namespace Notifier.Services.Notify
 {
-    public class EmailNotifyService : IEmailNotifyService
+    public class EmailNotifyService : INotifyService
     {
-        private readonly IEmailSender _emailSender;
-
-        public EmailNotifyService(IEmailSender emailSender)
+        public EmailNotifyService()
         {
-            _emailSender = emailSender;
         }
 
-        public async Task Notify(NotificationEvent notification, CancellationToken cancellationToken = default)
+        public async Task Notify([FromServices]IServiceProvider serviceProvider,NotificationEvent notification, CancellationToken cancellationToken = default)
         {
-           await  _emailSender.SendMailAsync(new Recipient(notification.Receiver), "Notifier", notification.Message, cancellationToken);
-        }
-    }
+            var _emailSender = serviceProvider.GetRequiredService<IEmailSender>();
 
-    public interface IEmailNotifyService : INotifyService
-    {
+            await  _emailSender.SendMailAsync(new Recipient(notification.Receiver), "Notifier", notification.Message, cancellationToken);
+        }
     }
 }

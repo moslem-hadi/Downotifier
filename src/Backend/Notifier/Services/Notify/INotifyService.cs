@@ -4,5 +4,5 @@ namespace Notifier.Services.Notify;
 
 public interface INotifyService
 {
-    Task Notify(NotificationEvent notification, CancellationToken cancellationToken = default);
+    Task Notify(IServiceProvider serviceProvider,NotificationEvent notification, CancellationToken cancellationToken = default);
 }

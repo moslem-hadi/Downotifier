@@ -18,12 +18,11 @@ builder.Services.AddMailerSend(options =>
     options.SenderName = builder.Configuration["MailSender:SenderName"];
 });
 builder.Services.AddScoped<INotifyService, EmailNotifyService>();
+builder.Services.AddSingleton<INotifierContext, NotifierContext>();
 builder.Services.AddMessaging()
     .AddSerialization()
     .AddRabbitMQMessaging()
     .AddHostedService<MessagingBackgroundService>();
-builder.Services.AddScoped<IEmailNotifyService, EmailNotifyService>();
-builder.Services.AddScoped<ISmsNotifyService, SmsNotifyService>();
 
 var app = builder.Build();
 

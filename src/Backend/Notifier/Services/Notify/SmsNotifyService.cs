@@ -1,18 +1,15 @@
-﻿using Notifier.Models.Events;
+﻿using Microsoft.AspNetCore.Mvc;
+using Notifier.Models.Events;
 
 namespace Notifier.Services.Notify
 {
-    public class SmsNotifyService : INotifyService, ISmsNotifyService
+    public class SmsNotifyService : INotifyService
     {
-        public Task Notify(NotificationEvent notification, CancellationToken cancellationToken = default)
+        public Task Notify([FromServices] IServiceProvider serviceProvider, NotificationEvent notification, CancellationToken cancellationToken = default)
         {
             //Send sms-
 
             return Task.CompletedTask;
         }
-    }
-
-    public interface ISmsNotifyService
-    {
     }
 }

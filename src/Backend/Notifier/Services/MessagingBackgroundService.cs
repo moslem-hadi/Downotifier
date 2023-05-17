@@ -1,8 +1,10 @@
-﻿using Notifier.Models.Events;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Notifier.Models.Events;
 using Notifier.Services.Notify;
 using Shared.Helper;
 using Shared.Messaging;
 using Shared.Services.Email;
+using System;
 using static Shared.Constants;
 
 namespace Notifier.Services
@@ -10,13 +12,11 @@ namespace Notifier.Services
     internal sealed class MessagingBackgroundService : BackgroundService
     {
         readonly IMessageSubscriber _messageSubscriber;
-        readonly ILogger<MessagingBackgroundService> _logger;
-        private readonly IEmailSender _emailSender;
-        public MessagingBackgroundService(IMessageSubscriber messageSubscriber, ILogger<MessagingBackgroundService> logger, IEmailSender emailSender)
+        private readonly INotifierContext _notifierContext;
+        public MessagingBackgroundService(IMessageSubscriber messageSubscriber, INotifierContext notifierContext)
         {
             _messageSubscriber = messageSubscriber;
-            _logger = logger;
-            _emailSender = emailSender;
+            _notifierContext = notifierContext;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -30,15 +30,18 @@ namespace Notifier.Services
         {
             var notify = message.Message;
             INotifyService strategy = default!;
+
             switch (notify.Type)
             {
                 case NotificationType.Email:
-                    strategy = new EmailNotifyService(_emailSender);
+                    strategy = new EmailNotifyService();
                     break;
                 default:
                     break;
             }
-            strategy.Notify(notify);
+
+            _notifierContext.SetNotifyService(strategy);
+            _notifierContext.Notify(notify);
         }
     }
 }
