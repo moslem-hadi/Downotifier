@@ -1,13 +1,22 @@
 using Hangfire;
+using Hangfire.Logging;
 using ProtoBuf.Meta;
 using Scheduler.Services;
+using Serilog;
 using Shared.Messaging;
 using Shared.Messaging.Pulsar;
 using Shared.Serialization;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.UseSerilog((ctx, lc) => lc
+       .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+       .Enrich.FromLogContext()
+       .ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -48,8 +57,10 @@ builder.Services.AddMessaging()
 ////read the message
 //channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
 
+var hangfireConnection = builder.Configuration.GetConnectionString("HangfireConnectionStrings");
 
-builder.Services.AddHangfire(x => x.UseSqlServerStorage(@"Data Source=.;Initial Catalog=hangfire;Integrated Security=True;Pooling=False;TrustServerCertificate=True"));
+Log.Fatal(hangfireConnection);
+builder.Services.AddHangfire(x => x.UseSqlServerStorage(hangfireConnection));
 builder.Services.AddHangfireServer();
 
 var app = builder.Build();

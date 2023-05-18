@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "front": "StartWithoutDebugging",
+        "identity-provider": "StartDebugging",
+        "notifier": "StartDebugging",
+        "scheduler": "StartDebugging",
+        "web-api": "StartWithoutDebugging"
+      }
+    }
+  }
+}

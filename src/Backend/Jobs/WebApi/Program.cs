@@ -12,6 +12,8 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
+app.Logger.LogInformation("Starting Application");
+app.Logger.LogInformation(builder.Configuration.GetConnectionString("DefaultConnection"));
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

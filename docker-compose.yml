@@ -1,0 +1,90 @@
+version: '3.4'
+
+services:
+  web-api:
+    container_name: web-api
+    image: ${DOCKER_REGISTRY-}web-api
+    build:
+      context: .
+      dockerfile: src/Backend/Jobs/WebApi/Dockerfile
+    ports:
+      - "7001:80"
+    depends_on:
+      - db
+      
+  identity-provider:
+    container_name: identity-provider
+    image: ${DOCKER_REGISTRY-}identity-provider
+    build:
+      context: .
+      dockerfile: src/Backend/IdentityProvider/Dockerfile
+    ports:
+      - "5000:443"
+
+  scheduler:
+    container_name: scheduler
+    image: ${DOCKER_REGISTRY-}scheduler
+    build:
+      context: ./
+      dockerfile: src/Backend/scheduler/Dockerfile
+    ports:
+      - "8000:443"
+      - "8001:80"
+    depends_on:
+      - rabbitmq
+
+  notifier:
+    container_name: notifier
+    image: ${DOCKER_REGISTRY-}notifier
+    build:
+      context: .
+      dockerfile: src/Backend/notifier/Dockerfile
+    ports:
+      - "9000:443"
+      - "9001:80"
+    depends_on:
+      - rabbitmq    
+
+  db:
+    container_name: sql_server2022
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1433:1433"
+    environment:
+        SA_PASSWORD: "S3cur3P@ssW0rd!"
+        ACCEPT_EULA: "Y"
+    expose:
+     - 1433
+
+  front:
+    container_name: front
+    image: ${DOCKER_REGISTRY-}front
+    build:
+      context: ./src/frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - web-api
+      
+  rabbitmq:
+    image: rabbitmq:latest
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
+      - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+     - 15672
+     - 5672
+      
+      
+      
