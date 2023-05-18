@@ -28,7 +28,3 @@ public class Notification : BaseEntity<int>
     public string Receiver { get; set; }
     public string Message { get; set; }
 }
-public enum NotificationType
-{
-    Email
-}

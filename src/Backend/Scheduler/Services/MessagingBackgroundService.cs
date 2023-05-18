@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using Scheduler.Jobs;
 using Scheduler.Models.Events;
 using Shared.Helper;
 using Shared.Messaging;
@@ -21,50 +22,43 @@ namespace Scheduler.Services
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             stoppingToken.ThrowIfCancellationRequested();
-            _messageSubscriber.SubscribeAsync<ApiCallJobCreated>(QueueConstants.Job, HandleApiCallJobCreated);
+            _messageSubscriber.SubscribeAsync<ApiCallJob>(QueueConstants.JobCreateQueue, HandleApiCallJobCreated);
+            _messageSubscriber.SubscribeAsync<ApiCallJob>(QueueConstants.JobUpdateQueue, HandleApiCallJobUpdated);
+            _messageSubscriber.SubscribeAsync<ApiCallJob>(QueueConstants.JobDeleteQueue, HandleApiCallJobDelete);
+
             return Task.CompletedTask;
 
         }
-        public void HandleApiCallJobCreated(MessageEnvelope<ApiCallJobCreated> message)
+        //TODO: move to separate file
+        public void HandleApiCallJobDelete(MessageEnvelope<ApiCallJob> message)
+        {
+            RecurringJob.RemoveIfExists(message.Message.Id.ToString());
+        }
+        public void HandleApiCallJobCreated(MessageEnvelope<ApiCallJob> message)
         {
             var apiCallJobMessage = message.Message;
-            var apiCallJob = new HttpCall(_messagePublisher);
-       
-            _logger.LogInformation("Job being added: "+ apiCallJobMessage.Url);
-
-            //RecurringJob.RemoveIfExists(apiCallJobMessage.Id.ToString());
-
-            RecurringJob.AddOrUpdate<HttpCall>(
-                apiCallJobMessage.Id.ToString(),
-                job => apiCallJob.Run(apiCallJobMessage,JobCancellationToken.Null),
-                Cron.MinuteInterval(apiCallJobMessage.MonitoringInterval!));
-
+            UpdateHangfire(apiCallJobMessage);
         }
-
-
-        public class HttpCall  
+        public void HandleApiCallJobUpdated(MessageEnvelope<ApiCallJob> message)
         {
-            private readonly IMessagePublisher _messagePublisher;
-
-            public HttpCall(IMessagePublisher messagePublisher)
-            {
-                _messagePublisher = messagePublisher;
-            }
-
-            public  async Task Run(ApiCallJobCreated msg,IJobCancellationToken cancellationToken)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                try
-                {
-                    _ = await HttpHelper.Request(msg.Method, msg.Url, msg.JsonBody, msg.Headers);
-                }
-                catch (Exception ex)
-                {
-                    if (msg.Notifications != null)
-                        foreach (var notify in msg.Notifications)
-                            await _messagePublisher.PublishAsync(QueueConstants.Notify, notify);
-                }
-            }
+            var apiCallJobMessage = message.Message;
+            RecurringJob.RemoveIfExists(apiCallJobMessage.Id.ToString());
+            UpdateHangfire(apiCallJobMessage);
         }
+
+        private void UpdateHangfire(ApiCallJob message)
+        {
+            var apiCallJob = new HttpCallJob(_messagePublisher);
+
+            _logger.LogInformation("Job being added: " + message.Url);
+            
+            RecurringJob.AddOrUpdate<HttpCallJob>(
+                message.Id.ToString(),
+                job => apiCallJob.Run(message, JobCancellationToken.Null),
+                Cron.MinuteInterval(message.MonitoringInterval!));
+        }
+
+
+
     }
 }

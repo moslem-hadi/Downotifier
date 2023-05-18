@@ -17,7 +17,7 @@ internal class ApiCallJobCreatedEventHandler : INotificationHandler<ApiCallJobCr
 
     public Task Handle(ApiCallJobCreatedEvent notification, CancellationToken cancellationToken)
     {
-        _messagePublisher.PublishAsync(QueueConstants.Job, notification.apiCallJob);
+        _messagePublisher.PublishAsync(QueueConstants.JobCreateQueue, notification.apiCallJob);
 
         return Task.CompletedTask;
     }

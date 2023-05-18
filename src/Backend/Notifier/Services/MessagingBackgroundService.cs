@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Notifier.Models.Events;
+﻿using Notifier.Models.Events;
 using Notifier.Services.Notify;
-using Shared.Helper;
+using Shared.Enums;
 using Shared.Messaging;
-using Shared.Services.Email;
-using System;
 using static Shared.Constants;
 
 namespace Notifier.Services
@@ -30,7 +27,7 @@ namespace Notifier.Services
         {
             var notify = message.Message;
             INotifyService strategy = default!;
-
+            //TODO: make it better
             switch (notify.Type)
             {
                 case NotificationType.Email:

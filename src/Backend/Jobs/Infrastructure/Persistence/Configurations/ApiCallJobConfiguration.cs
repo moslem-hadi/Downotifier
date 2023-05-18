@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
-using System.Reflection.Emit;
-using System.Text.Json;
 
 namespace Infrastructure.Persistence.Configurations;
 
