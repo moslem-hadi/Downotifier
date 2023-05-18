@@ -1,5 +1,5 @@
 ﻿namespace Domain.Common;
 
-public abstract record BaseEvent : INotification
+public abstract class BaseEvent : INotification
 {
 }

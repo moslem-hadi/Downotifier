@@ -24,7 +24,7 @@ public class GetShipByIdQueryHandler : IRequestHandler<GetApiCallJobsByIdQuery, 
 
     public async Task<ApiCallJobDto?> Handle(GetApiCallJobsByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.ApiCallJobs
+        var entity = await _context.ApiCallJobs.Include(a=> a.Notifications)
             .FirstOrDefaultAsync(a => a.UserId== Guid.Parse(_currentUserService.UserId!) && a.Id == request.ShipId);
         return _mapper.Map<ApiCallJobDto>(entity);
 

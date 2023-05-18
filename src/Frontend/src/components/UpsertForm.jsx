@@ -15,7 +15,6 @@ function UpsertForm({ id, afterSubmit }) {
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
-    debugger
     if (id) getJobApiCall(parseInt(id));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,6 +32,8 @@ function UpsertForm({ id, afterSubmit }) {
         monitoringInterval: jobApiCall.monitoringInterval,
         notifications: jobApiCall.notifications
       };
+      if (defaultValues.headers)
+        defaultValues.headers = Object.keys(jobApiCall.headers).map(function (k) { return k + ':' + jobApiCall.headers[k] }).join("&");
       reset({ ...defaultValues });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +68,6 @@ function UpsertForm({ id, afterSubmit }) {
   const { errors, isSubmitting } = formState;
 
   async function onSubmit(model) {
-    debugger
     try {
       await dispatch(
         jobApiCallUpsertActions.createJobApiCall(model)
@@ -197,14 +197,14 @@ function UpsertForm({ id, afterSubmit }) {
                 onClick={appendNotification} >+</button>
               <div>
                 {fields.map((field, index) => (
-                  <div className='mb-2 row'  key={field.id}>
+                  <div className='mb-2 row' key={field.id}>
                     <div className="col-2">
                       <select name="type" defaultValue={0} id="type"
-                     
-                          {...register(`notifications.${index}.type`, {
-                            valueAsNumber: true,
-                          })}
-                      className='form-select'>
+
+                        {...register(`notifications.${index}.type`, {
+                          valueAsNumber: true,
+                        })}
+                        className='form-select'>
                         <option value={0}>Email</option>
                       </select>
                     </div>

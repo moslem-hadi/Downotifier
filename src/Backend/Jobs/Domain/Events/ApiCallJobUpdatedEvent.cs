@@ -1,5 +1,10 @@
 ﻿namespace Domain.Events;
 
-public record ApiCallJobUpdatedEvent(ApiCallJob apiCallJob) : BaseEvent
+public class ApiCallJobUpdatedEvent : BaseEvent
 {
+    public ApiCallJob apiCallJob{ get; }
+    public ApiCallJobUpdatedEvent(ApiCallJob apiCallJob)
+    {
+        this.apiCallJob = apiCallJob;
+    }
 }
