@@ -1,0 +1,65 @@
+version: '3.4'
+
+services:
+  web-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=sql_server2022,1433;Database=DownotifierData;User=sa;Password=S3cur3P@ssW0rd!;Integrated Security=false;TrustServerCertificate=true
+    ports:
+      - "7001:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - netwrk
+
+
+  front:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "3000:3000"
+    networks:
+      - netwrk
+      
+  identity-provider:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:443" 
+      - "5001:80" 
+    networks:
+      - netwrk
+      
+  scheduler:
+    environment:
+      - EventBusConnection=rabbitmq
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+      - ConnectionStrings__Hangfire=Server=(localdb)\\mssqllocaldb;Database=HangfireDb;Trusted_Connection=True;MultipleActiveResultSets=true
+    networks:
+      - netwrk
+      
+  notifier:
+    environment:
+      - EventBusConnection=rabbitmq
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    networks:
+      - netwrk
+      
+  rabbitmq:
+    networks:
+      - netwrk      
+
+  db:
+    networks:
+      - netwrk
+  
+networks:
+  netwrk:
+    external: false
+    name: netwrk
+
+

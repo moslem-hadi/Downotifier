@@ -7,17 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/Backend/Jobs/WebApi/WebApi.csproj", "src/Backend/Jobs/WebApi/"]
-RUN dotnet restore "src/Backend/Jobs/WebApi/WebApi.csproj"
+COPY ["src/Backend/Notifier/Notifier.csproj", "src/Backend/Notifier/"]
+COPY ["src/Backend/Shared/Shared.csproj", "src/Backend/Shared/"]
+RUN dotnet restore "src/Backend/Notifier/Notifier.csproj"
 COPY . .
-WORKDIR "/src/src/Backend/Jobs/WebApi"
-RUN dotnet build "WebApi.csproj" -c Release -o /app/build
-RUN dotnet dev-certs https
+WORKDIR "/src/src/Backend/Notifier"
+RUN dotnet build "Notifier.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Notifier.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+ENTRYPOINT ["dotnet", "Notifier.dll"]

@@ -11,6 +11,8 @@ Log.Information("Starting up");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+    Log.Information("IsDevelopment: " + builder.Environment.IsDevelopment());
+    Log.Information(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
 
     builder.Services.AddCors();
     builder.Host.UseSerilog((ctx, lc) => lc

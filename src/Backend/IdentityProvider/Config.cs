@@ -43,9 +43,9 @@ public static class Config
 
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
-                RedirectUris = { "https://localhost:7000/signin-oidc" },
-                FrontChannelLogoutUri = "https://localhost:7000/signout-oidc",
-                PostLogoutRedirectUris = { "https://localhost:7000/signout-callback-oidc" },
+                RedirectUris = { "http://localhost:7001/signin-oidc" },
+                FrontChannelLogoutUri = "http://localhost:7001/signout-oidc",
+                PostLogoutRedirectUris = { "http://localhost:7001/signout-callback-oidc" },
 
                 AllowOfflineAccess = true,
                 AllowedScopes = { 
