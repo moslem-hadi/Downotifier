@@ -20,9 +20,6 @@ public record ApiCallJob
     public List<Notification> Notifications { get; set; }
 }
 
-public record ApiCallJobCreated: ApiCallJob{ }
-public record ApiCallJobUpdated : ApiCallJob { }
-public record ApiCallJobDeleted : ApiCallJob { }
 public class Notification// : IMessage
 {
     public NotificationType Type { get; set; }

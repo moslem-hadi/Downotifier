@@ -20,10 +20,13 @@ function createExtraActions() {
   function createJobApiCall() {
     return createAsyncThunk(
       `${name}/post`,
-      async (model, thunkApi) => { 
-
-        if(model.headers)
+      async (model, thunkApi) => {
+        debugger
+        if (model.headers?.length > 0)
           model.headers = getParameters(model.headers);
+        else
+          model.headers = null;
+        model.method = parseInt(model.method)
         if (model.id) return await fetchWrapper.put(`${baseUrl}/${model.id}`, model);
         else return await fetchWrapper.post(baseUrl, model);
       }
@@ -33,9 +36,9 @@ function createExtraActions() {
 function getParameters(paramStr) {
   var paramStr = paramStr.split("&");
   var parameters = {}
-  paramStr.map(item=>{
-      let keyValue = item.split(':')
-      return parameters[keyValue[0]] = keyValue[1];
+  paramStr.map(item => {
+    let keyValue = item.split(':')
+    return parameters[keyValue[0]] = keyValue[1];
   })
   return parameters;
 }

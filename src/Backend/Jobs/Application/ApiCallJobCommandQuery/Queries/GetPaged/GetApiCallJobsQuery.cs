@@ -13,13 +13,13 @@ public class GetApiCallJobsQuery : IRequest<PaginatedList<ApiCallJobDto>>
     public int PageSize { get; set; } = 10;
 }
 
-public class GetShipsQueryHandler : IRequestHandler<GetApiCallJobsQuery, PaginatedList<ApiCallJobDto>>
+public class GetApiCallJobsQueryHandler : IRequestHandler<GetApiCallJobsQuery, PaginatedList<ApiCallJobDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly ICurrentUserService _currentUserService;
 
-    public GetShipsQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUserService)
+    public GetApiCallJobsQueryHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUserService)
     {
         _context = context;
         _mapper = mapper;
