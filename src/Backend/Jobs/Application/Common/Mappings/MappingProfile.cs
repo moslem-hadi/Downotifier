@@ -11,8 +11,18 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-        CreateMap<CreateApiCallJobCommand, ApiCallJob>().ReverseMap();
-        CreateMap<UpdateApiCallJobCommand, ApiCallJob>().ReverseMap();
+        CreateMap<CreateApiCallJobCommand, ApiCallJob>()
+            .ForMember(x => x.Created, opt => opt.Ignore())
+            .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+            .ForMember(x => x.LastModified, opt => opt.Ignore())
+            .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+            .ForMember(x => x.DomainEvents, opt => opt.Ignore()).ReverseMap();
+        CreateMap<UpdateApiCallJobCommand, ApiCallJob>()
+            .ForMember(x => x.Created, opt => opt.Ignore())
+            .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+            .ForMember(x => x.LastModified, opt => opt.Ignore())
+            .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+            .ForMember(x => x.DomainEvents, opt => opt.Ignore()).ReverseMap();
     }
 
     private void ApplyMappingsFromAssembly(Assembly assembly)
