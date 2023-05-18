@@ -21,7 +21,6 @@ function createExtraActions() {
     return createAsyncThunk(
       `${name}/post`,
       async (model, thunkApi) => {
-        debugger
         if (model.headers?.length > 0)
           model.headers = getParameters(model.headers);
         else

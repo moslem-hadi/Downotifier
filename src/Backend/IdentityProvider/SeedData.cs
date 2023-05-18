@@ -55,6 +55,35 @@ public class SeedData
                     throw new Exception(result.Errors.First().Description);
                 }
                 Log.Debug("default user created");
+
+
+
+               var secondUser = new ApplicationUser
+                {
+                    UserName = "user2",
+                    Email = "user2@mail.com",
+                    EmailConfirmed = true,
+                };
+                result = userManager.CreateAsync(secondUser, "Pass123!").GetAwaiter().GetResult();
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                userManager.AddToRoleAsync(secondUser, Config.Constants.UserRole).GetAwaiter().GetResult();
+
+                result = userManager.AddClaimsAsync(secondUser,
+                        new Claim[]
+                        {
+                            new Claim(JwtClaimTypes.Role, Config.Constants.UserRole),
+                            new Claim(JwtClaimTypes.Name, secondUser.UserName),
+                        }).GetAwaiter().GetResult();
+
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Debug("second user created");
             }
             else
             {

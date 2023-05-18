@@ -17,7 +17,8 @@ try
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
-    builder.Services.AddSingleton<ICorsPolicyService>((container) => {
+    builder.Services.AddSingleton<ICorsPolicyService>((container) =>
+    {
         var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
         return new DefaultCorsPolicyService(logger)
         {
@@ -30,15 +31,8 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    // this seeding is only for the template to bootstrap the DB and users.
-    // in production you will likely want a different approach.
-    if (args.Contains("/seed"))
-    {
-        Log.Information("Seeding database...");
-        SeedData.EnsureSeedData(app);
-        Log.Information("Done seeding database. Exiting.");
-        return;
-    }
+
+    SeedData.EnsureSeedData(app);
 
     app.UseCors(builder => builder
         .AllowAnyOrigin()
