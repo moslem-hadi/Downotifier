@@ -13,8 +13,6 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
-IdentityModelEventSource.ShowPII = true;
-
 app.Logger.LogInformation("Starting Application");
 app.Logger.LogInformation(builder.Configuration.GetConnectionString("DefaultConnection"));
 // Configure the HTTP request pipeline.
