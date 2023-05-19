@@ -27,7 +27,8 @@ function authHeader(url) {
   // return auth header with jwt if user is logged in and request is to the api url
   const token = authToken();
   const isLoggedIn = !!token;
-  if (isLoggedIn) {
+  const isApiUrl = url.startsWith(process.env.REACT_APP_API_URL);
+  if (isLoggedIn && isApiUrl) {
     return { Authorization: `Bearer ${token}` };
   } else {
     return {};
@@ -35,7 +36,7 @@ function authHeader(url) {
 }
 
 function authToken() {
-  return store.getState().auth.user;
+  return store.getState().auth.user?.token;
 }
 
 function handleResponse(response) {
